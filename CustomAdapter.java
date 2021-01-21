@@ -45,24 +45,31 @@ public class ${NAME} extends RecyclerView.Adapter<RecyclerView.ViewHolder> imple
         if (list.size() == 0) {
             return new ViewHolderEmpty(LayoutInflater.from(parent.getContext()).inflate(emptyLayout == -1 ? R.layout.empty_item : emptyLayout, parent, false));
         } else {
-            return new MyHolder(ItemRvBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
+            return new MyHolder(${BINDING}.inflate(LayoutInflater.from(parent.getContext()), parent, false));
         }
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         //holder.itemView.setAnimation(AnimationUtils.loadAnimation(holder.itemView.getContext(), GblVariabel.anim));
-        holder.itemView.setOnClickListener(view -> {
-            onItemClickListener.onItemClick(position);
-        });
+        if (list.size() > 0) {
+            ((MyHolder)holder).bind(position, list.get(position), onItemClickListener);
+        }
     }
 
     public static class MyHolder extends RecyclerView.ViewHolder {
-        public ItemRvBinding binding;
+        public ${BINDING} binding;
 
-        public MyHolder(@NonNull ItemRvBinding itemView) {
+        public MyHolder(@NonNull ${BINDING} itemView) {
             super(itemView.getRoot());
             binding = itemView;
+        }
+
+        public void bind(int position, String data, OnItemClickListener onItemClickListener) {
+
+            itemView.setOnClickListener(view -> {
+                onItemClickListener.onItemClick(position);
+            });
         }
     }
 
