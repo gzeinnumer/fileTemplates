@@ -42,7 +42,7 @@ public class ${NAME} extends RecyclerView.Adapter<RecyclerView.ViewHolder> imple
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        if (list.size() == 0) {
+        if (viewType == TYPE_EMPTY) {
             return new ViewHolderEmpty(LayoutInflater.from(parent.getContext()).inflate(emptyLayout == -1 ? R.layout.empty_item : emptyLayout, parent, false));
         } else {
             return new MyHolder(${BINDING}.inflate(LayoutInflater.from(parent.getContext()), parent, false));
@@ -122,6 +122,18 @@ public class ${NAME} extends RecyclerView.Adapter<RecyclerView.ViewHolder> imple
     @Override
     public int getItemCount() {
         return list.size() > 0 ? list.size() : 1;
+    }
+    
+    private static int TYPE_NORMAL = 1;
+    private static int TYPE_EMPTY = 0;
+
+    @Override
+    public int getItemViewType(int position) {
+        if (list.size()>0){
+            return TYPE_NORMAL;
+        } else {
+            return TYPE_EMPTY;
+        }
     }
 
     public interface OnItemClickListener {
