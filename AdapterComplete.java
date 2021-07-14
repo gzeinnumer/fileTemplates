@@ -9,22 +9,17 @@ import android.widget.Filterable;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.gzeinnumer.mylibautotextview.AdapterAutoCompleteText;
-import com.gzeinnumer.mylibsimpletextwatcher.SimpleTextWatcher;
-import com.intishaka.kaokims.databinding.ItemProductParetoReasonBinding;
-import com.intishaka.kaokims.model.SdReason;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class ${NAME}Adapter extends RecyclerView.Adapter<${NAME}Adapter.MyHolder> implements Filterable {
     private final List<ItemBinding> holders;
     private final Context context;
-    private List<TempModel> list;
-    private List<TempModel> listFilter;
+    private List<${ITEM_TYPE}> list;
+    private List<${ITEM_TYPE}> listFilter;
     private OnItemClickListener onItemClickListener;
 
-    public ${NAME}Adapter(Context context, List<TempModel> list) {
+    public ${NAME}Adapter(Context context, List<${ITEM_TYPE}> list) {
         this.context = context;
         this.list = new ArrayList<>(list);
         this.listFilter = new ArrayList<>(list);
@@ -39,11 +34,11 @@ public class ${NAME}Adapter extends RecyclerView.Adapter<${NAME}Adapter.MyHolder
     private final Filter exampleFilter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
-            List<TempModel> fildteredList = new ArrayList<>();
+            List<${ITEM_TYPE}> fildteredList = new ArrayList<>();
             if (constraint != null || constraint.length() != 0) {
                 String filterPattern = constraint.toString().toLowerCase().trim();
 
-                for (TempModel item : listFilter) {
+                for (${ITEM_TYPE} item : listFilter) {
                     if (item.getName().toLowerCase().contains(filterPattern)) {
                         fildteredList.add(item);
                     }
@@ -62,7 +57,7 @@ public class ${NAME}Adapter extends RecyclerView.Adapter<${NAME}Adapter.MyHolder
         }
     };
 
-    public void setList(List<TempModel> list) {
+    public void setList(List<${ITEM_TYPE}> list) {
         this.list = new ArrayList<>(list);
         this.listFilter = new ArrayList<>(list);
         initHolders();
@@ -88,7 +83,7 @@ public class ${NAME}Adapter extends RecyclerView.Adapter<${NAME}Adapter.MyHolder
     @Override
     public void onBindViewHolder(@NonNull MyHolder holder, int position) {
         holders.set(position, ItemBinding.bind(holder.itemBinding.getRoot()));
-        holder.bind(list.get(position));
+        holder.bind(list.get(position), onItemClickListener);
         initKeepValue(holder, position);
     }
 
@@ -107,7 +102,7 @@ public class ${NAME}Adapter extends RecyclerView.Adapter<${NAME}Adapter.MyHolder
     }
 
     private void initKeepValue(MyHolder holder, int position) {
-        holder.itemBinding.ed.addTextChangedListener(new SimpleTextWatcher(s -> list.get(position).setName(s.toString())));
+        //holder.itemBinding.ed.addTextChangedListener(new SimpleTextWatcher(s -> list.get(position).setName(s.toString())));
 
         if (list.get(position).getName() != null && list.get(position).getName().length() > 0) {
             holder.itemBinding.ed.setText(list.get(position).getName());
@@ -124,34 +119,10 @@ public class ${NAME}Adapter extends RecyclerView.Adapter<${NAME}Adapter.MyHolder
             itemBinding = itemView;
         }
 
-        public void bind(TempModel data) {
+        public void bind(${ITEM_TYPE} data, OnItemClickListener onItemClickListener) {
+            if(onItemClickListener!=null){
+                //performClick
+            }
         }
-    }
-}
-
-class TempModel {
-
-    public int id;
-    public String name;
-
-    public TempModel(int id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 }
