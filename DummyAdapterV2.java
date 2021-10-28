@@ -1,6 +1,7 @@
 package ${PACKAGE_NAME};
 
 import android.content.Context;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,18 +42,18 @@ public class DummyAdapterV2 extends RecyclerView.Adapter<DummyAdapterV2.MyHolder
             onItemClickListener.onItemClick(position);
         });
         ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) holder.cardView.getLayoutParams();
-        int t = 10; //out
-        int h = 16; //out
-        int m = 10; //top-bottom
-        int l = m / 2; //center
+        int first_last = 16;
+        int left_right = 16;
+        int space = 10;
+        int center = space/2;
         if (position == 0) {
-            layoutParams.setMargins(intToDp(h), intToDp(t), intToDp(h), intToDp(l));
+            layoutParams.setMargins(intToDp(left_right), intToDp(first_last), intToDp(left_right), intToDp(center));
             holder.cardView.setLayoutParams(layoutParams);
-        } else if (position == size - 1) {
-            layoutParams.setMargins(intToDp(h), intToDp(l), intToDp(h), intToDp(t));
+        } else if (position == size-1){
+            layoutParams.setMargins(intToDp(left_right), intToDp(center), intToDp(left_right), intToDp(first_last));
             holder.cardView.setLayoutParams(layoutParams);
         } else {
-            layoutParams.setMargins(intToDp(h), intToDp(l), intToDp(h), intToDp(l));
+            layoutParams.setMargins(intToDp(left_right), intToDp(center), intToDp(left_right), intToDp(center));
             holder.cardView.setLayoutParams(layoutParams);
         }
     }
