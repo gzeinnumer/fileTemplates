@@ -12,10 +12,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class DummyAdapterV2 extends RecyclerView.Adapter<DummyAdapterV2.MyHolder> {
 
-    int layout;
-    int size = 20;
-    OnItemClickListener onItemClickListener;
-    Context context;
+    private int layout;
+    private int size = 20;
+    private OnItemClickListener onItemClickListener;
+    private Context context;
 
     public DummyAdapterV2(int layout, int size, OnItemClickListener onItemClickListener) {
         this.layout = layout;
@@ -41,21 +41,10 @@ public class DummyAdapterV2 extends RecyclerView.Adapter<DummyAdapterV2.MyHolder
         holder.itemView.setOnClickListener(view -> {
             onItemClickListener.onItemClick(position);
         });
+
         ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) holder.cardView.getLayoutParams();
-        int first_last = 16;
-        int left_right = 16;
-        int space = 10;
-        int center = space/2;
-        if (position == 0) {
-            layoutParams.setMargins(intToDp(left_right), intToDp(first_last), intToDp(left_right), intToDp(center));
-            holder.cardView.setLayoutParams(layoutParams);
-        } else if (position == size-1){
-            layoutParams.setMargins(intToDp(left_right), intToDp(center), intToDp(left_right), intToDp(first_last));
-            holder.cardView.setLayoutParams(layoutParams);
-        } else {
-            layoutParams.setMargins(intToDp(left_right), intToDp(center), intToDp(left_right), intToDp(center));
-            holder.cardView.setLayoutParams(layoutParams);
-        }
+
+        prepareSpace(layoutParams, position, holder);
     }
 
     @Override
@@ -63,20 +52,33 @@ public class DummyAdapterV2 extends RecyclerView.Adapter<DummyAdapterV2.MyHolder
         return size;
     }
 
-    public interface OnItemClickListener {
-        void onItemClick(int position);
-    }
-
     public static class MyHolder extends RecyclerView.ViewHolder {
         CardView cardView;
-
         public MyHolder(@NonNull View itemView) {
             super(itemView);
             cardView = itemView.findViewById(R.id.cv);
         }
     }
 
-    public int intToDp(int sizeInDPH) {
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, sizeInDPH, context.getResources().getDisplayMetrics());
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
+    public int intToDp(int sizeInDPH){
+        return  (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, sizeInDPH, context.getResources().getDisplayMetrics());
+    }
+
+    private void prepareSpace(ViewGroup.MarginLayoutParams layoutParams, int position, MyHolder holder) {
+        int topBottomRv = 10;
+        int leftRightItem = 10;
+        int spaceBetween = 10/2;
+        if (position == 0) {
+            layoutParams.setMargins(intToDp(leftRightItem), intToDp(topBottomRv), intToDp(leftRightItem), intToDp(spaceBetween));
+        } else if (position == size-1){
+            layoutParams.setMargins(intToDp(leftRightItem), intToDp(spaceBetween), intToDp(leftRightItem), intToDp(topBottomRv));
+        } else {
+            layoutParams.setMargins(intToDp(leftRightItem), intToDp(spaceBetween), intToDp(leftRightItem), intToDp(spaceBetween));
+        }
+        holder.cardView.setLayoutParams(layoutParams);
     }
 }
