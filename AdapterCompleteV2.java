@@ -16,20 +16,20 @@ import java.util.List;
 public class ${ClassName} extends RecyclerView.Adapter<${ClassName}.MyHolder> {
 
     private Context context;
-    private List<${Model}> list;
-    private List<${Model}> listFilter;
-    private List<${ItemBinding}> holders;
+    private List<ParamsModel> list;
+    private List<ParamsModel> listFilter;
+    private List<ParamItemBinding> holders;
 
-    public ${ClassName}(List<${Model}> list) {
+    public ${ClassName}(List<ParamsModel> list) {
         this.list = list;
         this.listFilter = list;
         this.holders = new ArrayList<>(list.size());
         initHolders();
     }
 
-    private BaseCallBack<${Model}> callBack;
+    private BaseCallBack<ParamsModel> callBack;
 
-    public void setCallBack(BaseCallBack<${Model}> callBack) {
+    public void setCallBack(BaseCallBack<ParamsModel> callBack) {
         this.callBack = callBack;
     }
 
@@ -39,7 +39,7 @@ public class ${ClassName} extends RecyclerView.Adapter<${ClassName}.MyHolder> {
         }
     }
 
-    public void setList(List<${Model}> list) {
+    public void setList(List<ParamsModel> list) {
         this.list = list;
         this.listFilter = list;
         this.holders = new ArrayList<>(list.size());
@@ -47,11 +47,11 @@ public class ${ClassName} extends RecyclerView.Adapter<${ClassName}.MyHolder> {
         notifyDataSetChanged();
     }
 
-    public List<${Model}> getList() {
+    public List<ParamsModel> getList() {
         return list;
     }
 
-    public List<${ItemBinding}> getHolders() {
+    public List<ParamItemBinding> getHolders() {
         return holders;
     }
 
@@ -59,12 +59,12 @@ public class ${ClassName} extends RecyclerView.Adapter<${ClassName}.MyHolder> {
     @Override
     public MyHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         this.context = parent.getContext();
-        return new MyHolder(${ItemBinding}.inflate(LayoutInflater.from(parent.getContext()), parent, false));
+        return new MyHolder(ParamItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyHolder holder, int position) {
-        holders.set(position, ${ItemBinding}.bind(holder.itemBinding.getRoot()));
+        holders.set(position, ParamItemBinding.bind(holder.itemBinding.getRoot()));
         holder.bind(list.get(position), callBack);
         prepareSpace(holder.itemBinding.cv, position);
     }
@@ -97,11 +97,11 @@ public class ${ClassName} extends RecyclerView.Adapter<${ClassName}.MyHolder> {
     private final Filter filter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
-            List<${Model}> fildteredList = new ArrayList<>();
+            List<ParamsModel> fildteredList = new ArrayList<>();
             if (constraint != null || constraint.length() != 0) {
                 String filterPattern = constraint.toString().toLowerCase().trim();
 
-                for (${Model} item : listFilter) {
+                for (ParamsModel item : listFilter) {
                     if (item.toString().toLowerCase().contains(filterPattern)) {
                         fildteredList.add(item);
                     }
@@ -125,14 +125,14 @@ public class ${ClassName} extends RecyclerView.Adapter<${ClassName}.MyHolder> {
     }
 
     public static class MyHolder extends RecyclerView.ViewHolder {
-        public ${ItemBinding} itemBinding;
+        public ParamItemBinding itemBinding;
 
-        public MyHolder(@NonNull ${ItemBinding} itemView) {
+        public MyHolder(@NonNull ParamItemBinding itemView) {
             super(itemView.getRoot());
             itemBinding = itemView;
         }
 
-        public void bind(${Model} data, BaseCallBack<${Model}> callBack) {
+        public void bind(ParamsModel data, BaseCallBack<ParamsModel> callBack) {
             if (callBack!=null){
 
             }
