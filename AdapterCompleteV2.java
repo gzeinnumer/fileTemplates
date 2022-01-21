@@ -73,20 +73,24 @@ public class ${ClassName} extends RecyclerView.Adapter<${ClassName}.MyHolder> {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, sizeInDPH, context.getResources().getDisplayMetrics());
     }
 
-    private void prepareSpace(CardView cv, int position) {
-        ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) cv.getLayoutParams();
+    private void prepareSpace(CardView cardView, int position) {
+        ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) cardView.getLayoutParams();
 
         int topBottomRv = 10;
         int leftRightItem = 10;
         int spaceBetween = 10 / 2;
-        if (position == 0) {
+        int mSize = list.size();
+        
+        if (mSize == 1) {
+            layoutParams.setMargins(intToDp(topBottomRv), intToDp(topBottomRv), intToDp(topBottomRv), intToDp(topBottomRv));
+        } else if (position == 0) {
             layoutParams.setMargins(intToDp(leftRightItem), intToDp(topBottomRv), intToDp(leftRightItem), intToDp(spaceBetween));
-        } else if (position == list.size() - 1) {
+        } else if (position == mSize - 1) {
             layoutParams.setMargins(intToDp(leftRightItem), intToDp(spaceBetween), intToDp(leftRightItem), intToDp(topBottomRv));
         } else {
             layoutParams.setMargins(intToDp(leftRightItem), intToDp(spaceBetween), intToDp(leftRightItem), intToDp(spaceBetween));
         }
-        cv.setLayoutParams(layoutParams);
+        cardView.setLayoutParams(layoutParams);
     }
 
     @Override
