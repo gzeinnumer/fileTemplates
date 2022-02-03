@@ -102,7 +102,7 @@ public class ${ClassName} extends RecyclerView.Adapter<${ClassName}.MyHolder> {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             List<ParamsModel> fildteredList = new ArrayList<>();
-            if (constraint != null || constraint.length() != 0) {
+            if (constraint != null && constraint.length() != 0) {
                 String filterPattern = constraint.toString().toLowerCase().trim();
 
                 for (ParamsModel item : listFilter) {

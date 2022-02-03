@@ -35,7 +35,7 @@ public class ${NAME}Adapter extends RecyclerView.Adapter<${NAME}Adapter.MyHolder
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             List<${ITEM_TYPE}> fildteredList = new ArrayList<>();
-            if (constraint != null || constraint.length() != 0) {
+            if (constraint != null && constraint.length() != 0) {
                 String filterPattern = constraint.toString().toLowerCase().trim();
 
                 for (${ITEM_TYPE} item : listFilter) {

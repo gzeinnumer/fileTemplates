@@ -1,9 +1,10 @@
 package ${PACKAGE_NAME};
 
-import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.AndroidViewModel;
 
-public class ${NAME}VM extends ViewModel {
+public class ${NAME}VM extends AndroidViewModel {
 
-    public ${NAME}VM() {
+    public ${NAME}VM(Application application) {
+        super(application);
     }
 }
