@@ -9,8 +9,6 @@ import android.widget.Filterable;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.gzeinnumer.myapplication.databinding.ItemRvBinding;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -20,17 +18,12 @@ public class ${NAME} extends RecyclerView.Adapter<RecyclerView.ViewHolder> imple
 
     private List<${ITEM_TYPE}> list;
     private List<${ITEM_TYPE}> listFilter;
-    private OnItemClickListener onItemClickListener;
 
     private int emptyLayout = -1;
 
     public ${NAME}() {
         this.list = new ArrayList<>();
         this.listFilter = new ArrayList<>(list);
-    }
-
-    protected void setOnItemClickListener(OnItemClickListener onItemClickListener) {
-        this.onItemClickListener = onItemClickListener;
     }
 
     public void setList(List<${ITEM_TYPE}> list) {
@@ -58,14 +51,14 @@ public class ${NAME} extends RecyclerView.Adapter<RecyclerView.ViewHolder> imple
     }
 
     public static class MyHolder extends RecyclerView.ViewHolder {
-        public ${BINDING} binding;
+        public ${BINDING} itemBinding;
 
         public MyHolder(@NonNull ${BINDING} itemView) {
             super(itemView.getRoot());
-            binding = itemView;
+            itemBinding = itemView;
         }
 
-        public void bind(int position, String data, OnItemClickListener onItemClickListener) {
+        public void bind(int position, ${ITEM_TYPE} data, BaseCallBack<${ITEM_TYPE}> onItemClickListener) {
 
             itemView.setOnClickListener(view -> {
                 onItemClickListener.onItemClick(position);
@@ -87,7 +80,7 @@ public class ${NAME} extends RecyclerView.Adapter<RecyclerView.ViewHolder> imple
                     @Override
                     public int compare(${ITEM_TYPE} o1, ${ITEM_TYPE} o2) {
 //                        return o1.getStrTv2().toLowerCase().compareTo(o2.getStrTv2().toLowerCase());
-                        return o1.toLowerCase().compareTo(o2.toLowerCase());
+                        return o1.toString().toLowerCase().compareTo(o2.toString().toLowerCase());
                     }
                 });
                 fildteredList.addAll(listFilter);
@@ -95,7 +88,7 @@ public class ${NAME} extends RecyclerView.Adapter<RecyclerView.ViewHolder> imple
                 String filterPattern = constraint.toString().toLowerCase().trim();
 
                 for (${ITEM_TYPE} item : listFilter) {
-                    if (item.toLowerCase().contains(filterPattern)) {
+                    if (item.toString().toLowerCase().contains(filterPattern)) {
                         fildteredList.add(item);
                     }
                 }
@@ -135,8 +128,10 @@ public class ${NAME} extends RecyclerView.Adapter<RecyclerView.ViewHolder> imple
             return TYPE_EMPTY;
         }
     }
+    
+    private BaseCallBack<${ITEM_TYPE}> onItemClickListener;
 
-    public interface OnItemClickListener {
-        void onItemClick(int position);
+    public void setOnItemClickListener(BaseCallBack<${ITEM_TYPE}> onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
     }
 }
