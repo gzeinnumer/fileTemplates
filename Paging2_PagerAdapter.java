@@ -12,9 +12,6 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.akiniyalocts.pagingrecycler.PagingAdapter;
-import com.intishaka.gofo.R;
-import com.intishaka.gofo.base.BaseCallBack;
-import com.intishaka.gofo.base.BaseConstant;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,9 +20,9 @@ public class ${CLASS}Pager extends PagingAdapter {
     private final List<${MODEL}> list = new ArrayList<>();
     private Context context;
     
-    private BaseDebugCallback<${MODEL}> baseDebugCallback;
+    private BaseCallBackAdapter<${MODEL}> baseDebugCallback;
 
-    public void setBaseDebugCallback(BaseDebugCallback<${MODEL}> baseDebugCallback) {
+    public void setBaseDebugCallback(BaseCallBackAdapter<${MODEL}> baseDebugCallback) {
         this.baseDebugCallback = baseDebugCallback;
     }
 

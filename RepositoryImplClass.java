@@ -9,8 +9,8 @@ import io.reactivex.schedulers.Schedulers;
 
 public class ${NAME}RepoImpl implements ${NAME}Repo {
 
-//    private final ${NAME}RepoImpl repo;
-//    repo = new ${NAME}RepoImpl(application.getApplicationContext());
+//    private final ${NAME}RepoImpl repo${NAME};
+//    repo${NAME} = new ${NAME}RepoImpl(application.getApplicationContext());
     
     private final Context context;
     private final CompositeDisposable compositeDisposable;
