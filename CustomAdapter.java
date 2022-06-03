@@ -18,18 +18,29 @@ public class ${NAME} extends RecyclerView.Adapter<RecyclerView.ViewHolder> imple
 
     private List<${ITEM_TYPE}> list;
     private List<${ITEM_TYPE}> listFilter;
+    private List<${BINDING}> holders;
 
     private int emptyLayout = -1;
 
     public ${NAME}() {
         this.list = new ArrayList<>();
         this.listFilter = new ArrayList<>(list);
+        this.holders = new ArrayList<>(list.size());
+        initHolders();
     }
 
     public void setList(List<${ITEM_TYPE}> list) {
         this.list = list;
         this.listFilter = new ArrayList<>(list);
+        this.holders = new ArrayList<>(list.size());
+        initHolders();
         notifyDataSetChanged();
+    }
+    
+    private void initHolders() {
+        for (int i = 0; i < list.size(); i++) {
+            holders.add(null);
+        }
     }
 
     @NonNull
@@ -46,23 +57,8 @@ public class ${NAME} extends RecyclerView.Adapter<RecyclerView.ViewHolder> imple
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         //holder.itemView.setAnimation(AnimationUtils.loadAnimation(holder.itemView.getContext(), GblVariabel.anim));
         if (list.size() > 0) {
+            holders.set(position, ${BINDING}.bind(((MyHolder)holder).itemBinding.getRoot()));
             ((MyHolder)holder).bind(position, list.get(position), onItemClickListener);
-        }
-    }
-
-    public static class MyHolder extends RecyclerView.ViewHolder {
-        public ${BINDING} itemBinding;
-
-        public MyHolder(@NonNull ${BINDING} itemView) {
-            super(itemView.getRoot());
-            itemBinding = itemView;
-        }
-
-        public void bind(int position, ${ITEM_TYPE} data, BaseCallBack<${ITEM_TYPE}> onItemClickListener) {
-
-            itemView.setOnClickListener(view -> {
-                onItemClickListener.onItemClick(position);
-            });
         }
     }
 
@@ -76,13 +72,6 @@ public class ${NAME} extends RecyclerView.Adapter<RecyclerView.ViewHolder> imple
         protected FilterResults performFiltering(CharSequence constraint) {
             List<${ITEM_TYPE}> fildteredList = new ArrayList<>();
             if (constraint == null || constraint.length() == 0) {
-                Collections.sort(listFilter, new Comparator<${ITEM_TYPE}>() {
-                    @Override
-                    public int compare(${ITEM_TYPE} o1, ${ITEM_TYPE} o2) {
-//                        return o1.getStrTv2().toLowerCase().compareTo(o2.getStrTv2().toLowerCase());
-                        return o1.toString().toLowerCase().compareTo(o2.toString().toLowerCase());
-                    }
-                });
                 fildteredList.addAll(listFilter);
             } else {
                 String filterPattern = constraint.toString().toLowerCase().trim();
@@ -102,6 +91,7 @@ public class ${NAME} extends RecyclerView.Adapter<RecyclerView.ViewHolder> imple
         protected void publishResults(CharSequence constraint, FilterResults results) {
             list.clear();
             list.addAll((List) results.values);
+            initHolders();
             notifyDataSetChanged();
         }
     };
@@ -129,9 +119,26 @@ public class ${NAME} extends RecyclerView.Adapter<RecyclerView.ViewHolder> imple
         }
     }
     
-    private BaseCallBack<${ITEM_TYPE}> onItemClickListener;
+    private BaseCallBackAdapter<${ITEM_TYPE}> onItemClickListener;
 
-    public void setOnItemClickListener(BaseCallBack<${ITEM_TYPE}> onItemClickListener) {
+    public void setOnItemClickListener(BaseCallBackAdapter<${ITEM_TYPE}> onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
+    }
+    
+    public static class MyHolder extends RecyclerView.ViewHolder {
+        public ${BINDING} itemBinding;
+
+        public MyHolder(@NonNull ${BINDING} itemView) {
+            super(itemView.getRoot());
+            itemBinding = itemView;
+        }
+
+        public void bind(int position, ${ITEM_TYPE} data, BaseCallBackAdapter<${ITEM_TYPE}> onItemClickListener) {
+            if(onItemClickListener!=null){
+                itemView.setOnClickListener(view -> {
+                    onItemClickListener.onClick(1,position,data);
+                });
+            }
+        }
     }
 }
