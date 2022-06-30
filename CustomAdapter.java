@@ -43,6 +43,10 @@ public class ${NAME} extends RecyclerView.Adapter<RecyclerView.ViewHolder> imple
         }
     }
 
+    public List<${ITEM_TYPE}> getList() {
+        return list;
+    }
+
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
