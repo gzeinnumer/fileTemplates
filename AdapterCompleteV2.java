@@ -27,9 +27,9 @@ public class ${ClassName} extends RecyclerView.Adapter<${ClassName}.MyHolder> {
         initHolders();
     }
 
-    private BaseCallBack<ParamsModel> callBack;
+    private BaseCallBackAdapter<ParamsModel> callBack;
 
-    public void setCallBack(BaseCallBack<ParamsModel> callBack) {
+    public void setCallBack(BaseCallBackAdapter<ParamsModel> callBack) {
         this.callBack = callBack;
     }
 
@@ -136,7 +136,7 @@ public class ${ClassName} extends RecyclerView.Adapter<${ClassName}.MyHolder> {
             itemBinding = itemView;
         }
 
-        public void bind(ParamsModel data, BaseCallBack<ParamsModel> callBack) {
+        public void bind(ParamsModel data, BaseCallBackAdapter<ParamsModel> callBack) {
             if (callBack!=null){
 
             }
